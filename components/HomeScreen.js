@@ -10,12 +10,11 @@ class HomeScreen extends Component {
                 <Text style={styles.heroText}>
                     Welcome to Messenger
                 </Text>
-                <Button title="Login" onPress={() => navigate('login')}/>
-                <Button title="Register" onPress={() => navigate('register')}/>
+                <Button title="Login" onPress={() => navigate('Login')}/>
+                <Button title="Register" onPress={() => navigate('Register')}/>
             </View>
         )
     }
-
 }
 
 var styles = StyleSheet.create({
