@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, TextInput, Button, StyleSheet, ActivityIndicator, AsyncStorage} from 'react-native'
-
+import axios from 'axios'
 class LoginScreen extends Component {
     constructor(){
         super()
