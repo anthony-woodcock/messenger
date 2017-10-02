@@ -1,9 +1,48 @@
 import React, { Component } from 'react'
-import {View, Text, Button, StyleSheet} from 'react-native'
+import {View, Text, Button, StyleSheet, AsyncStorage} from 'react-native'
+import axios from 'axios'
 
 class HomeScreen extends Component {
+    constructor(){
+        super()
+
+        this.state = {
+            loggedIn: false,
+            conversations: []
+        }
+    }
+
+    componentDidMount(){
+        AsyncStorage.getItem('loginToken').then((token) => {
+            if(!token){
+                return
+            }
+
+            axios.get('https://still-shelf-13222.herokuapp.com/conversations', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }).then(response =>{
+                if(response.staus !== 401){
+                    this.setState({
+                        loggedIn: true,
+                        conversations: response.data
+                    })
+                }
+            }).catch(error => console.log(error))
+        })
+    }
+
     render(){
         const {navigate} = this.props.navigation
+
+        if(this.state.loggedIn) {
+            return(
+                <View style={styles.container}>
+                    <Text>Conversations will go here</Text>
+                </View>
+            )
+        }
         
         return(
             <View style={styles.container}>
