@@ -40,6 +40,7 @@ class HomeScreen extends Component {
             return(
                 <View style={styles.container}>
                     <Text>Conversations will go here</Text>
+                    <Button title="New Conversation" onPress={() => navigate('NewConversation')}/>
                 </View>
             )
         }
