@@ -26,7 +26,7 @@ class HomeScreen extends Component {
                     Authorization: `Bearer ${token}`
                 }
             }).then(response =>{
-                console.log(response)
+                
                 if(response.status !== 401){
                     this.setState({
                         loggedIn: true,
@@ -46,7 +46,6 @@ class HomeScreen extends Component {
         const {navigate} = this.props.navigation
 
         if(this.state.loggedIn) {
-            console.log(this.state)
             return(
                 <View style={styles.container}>
                     <Text>Conversations will go here</Text>
@@ -55,7 +54,7 @@ class HomeScreen extends Component {
                     data={this.state.conversations}
                     renderItem={({item})=> <Conversation onChooseConversation={this.handleChooseConversation} {...item}/>}
                     keyExtractor={(item)=>{
-                        console.log(item)
+                        //console.log(item)
                         return item._id}}
                     />
                 </View> 

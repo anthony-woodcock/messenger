@@ -21,7 +21,7 @@ class ConversationScreen extends Component {
         }
       }).then(response => {
         this.setState({
-          conversation: response.data
+          conversation: response
         })
       })
 
@@ -30,9 +30,10 @@ class ConversationScreen extends Component {
           Authorization: `Bearer ${token}`
         }
       }).then(response => {
-        this.setState({
-          messages: response.data
-        })
+          console.log(response)
+          this.setState({
+            messages: response
+          }) 
       })
     })
   }
