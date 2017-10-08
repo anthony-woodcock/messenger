@@ -25,7 +25,7 @@ class ConversationScreen extends Component {
         }
       }).then(response => {
         this.setState({
-          conversation: response
+          conversation: response.data
         })
       })
       axios.get(`https://still-shelf-13222.herokuapp.com/messages/${conversationId}`, {
@@ -34,14 +34,14 @@ class ConversationScreen extends Component {
         }
       }).then(response => {
           this.setState({
-            messages: response
+            messages: response.data
           })
       })
     })
   }
 
   handleAddMessage() {
-    const { conversation, newMessage } = this.state.conversation
+    const { conversation, newMessage } = this.state
     const content = this.state.newMessage
 
     if (conversation) {
