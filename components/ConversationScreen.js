@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, AsyncStorage, FlatList, Text } from 'react-native'
+import { View, StyleSheet, AsyncStorage, FlatList, Text, TextInput, Button } from 'react-native'
 import axios from 'axios'
 
 class ConversationScreen extends Component {
@@ -8,9 +8,13 @@ class ConversationScreen extends Component {
 
     this.state = {
       conversation: {},
-      messages: []
+      messages: [],
+      newMessage: ''
     }
+
+    this.handleAddMessage = this.handleAddMessage.bind(this)
   }
+  
   componentDidMount () {
     const conversationId = this.props.navigation.state.params.conversationId
 
@@ -24,23 +28,47 @@ class ConversationScreen extends Component {
           conversation: response
         })
       })
-
       axios.get(`https://still-shelf-13222.herokuapp.com/messages/${conversationId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       }).then(response => {
-          console.log(response)
           this.setState({
             messages: response
-          }) 
+          })
       })
     })
   }
 
+  handleAddMessage() {
+    const { conversation, newMessage } = this.state.conversation
+    const content = this.state.newMessage
+
+    if (conversation) {
+      const { _id, recipientId } = conversation
+  
+      AsyncStorage.getItem('loginToken').then(token => {
+        axios.post(`https://still-shelf-13222.herokuapp.com/messages`, {
+          conversationId: _id,
+          recipientId,
+          content: newMessage
+        }, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }).then(response => {
+          this.setState({
+            newMessage: ''
+          })
+          this.componentDidMount()
+        })
+      })    
+    }
+  }
+ 
   render () {
     return (
-      <View style={styles.container}>
+      <View style={styles.container}> 
         <FlatList
           data={this.state.messages}
           renderItem={({item}) => (
@@ -51,6 +79,14 @@ class ConversationScreen extends Component {
           )}
           keyExtractor={(item) => item._id}
         />
+        <View style={styles.newMessageBar}>
+          <TextInput 
+            style={styles.newMessageInput}
+            onChangeText={(text) => this.setState({ newMessage: text })}
+            value={this.state.newMessage}
+          />
+        <Button title="Send" onPress={this.handleAddMessage} />
+        </View>
       </View>
     )
   }
@@ -60,6 +96,16 @@ const styles = StyleSheet.create ({
   container: {
     flex: 1,
     justifyContent: 'center'
+  },
+  newMessageBar: {
+    flexDirection: 'row',
+    padding: 10
+  },
+  newMessageInput: {
+    backgroundColor: 'white',
+    padding: 10,
+    flex: 1,
+    marginRight: 10
   }
 })
 

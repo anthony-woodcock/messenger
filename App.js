@@ -3,7 +3,6 @@ import HomeScreen from './components/HomeScreen'
 import RegisterScreen from './components/RegisterScreen'
 import LoginScreen from './components/LoginScreen'
 import NewConversationScreen from './components/NewConversationScreen'
-import Conversation from './components/Conversation'
 import ConversationScreen from './components/ConversationScreen'
 
 export default StackNavigator({
@@ -11,6 +10,6 @@ export default StackNavigator({
   Login: { screen: LoginScreen },
   Register: { screen: RegisterScreen },
   NewConversation: { screen: NewConversationScreen },
-  Conversation: { screen: Conversation },
-  ConversationScreen: { screen: ConversationScreen }
-})
+  Conversation: { screen: ConversationScreen }
+}) 
+ 

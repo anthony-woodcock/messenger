@@ -54,7 +54,6 @@ class HomeScreen extends Component {
                     data={this.state.conversations}
                     renderItem={({item})=> <Conversation onChooseConversation={this.handleChooseConversation} {...item}/>}
                     keyExtractor={(item)=>{
-                        //console.log(item)
                         return item._id}}
                     />
                 </View> 
